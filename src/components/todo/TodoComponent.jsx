@@ -14,6 +14,7 @@ export default function TodoComponent(){
 
     const [description, setDescription] = useState('')
     const [targetDate, setTargetDate] = useState('')
+    const [done, setDone] = useState(false);
 
     useEffect(() => {
         retrieveTodo()
@@ -25,6 +26,7 @@ export default function TodoComponent(){
                 (response)=>{
                     setDescription(response.data.description)
                     setTargetDate(response.data.targetDate)
+                    setDone(response.data.done);
                 }
             )
             .catch(
@@ -42,14 +44,16 @@ export default function TodoComponent(){
             username: username,
             description: values.description,
             targetDate: values.targetDate,
-            done:false
+            done:values.done
         }
 
-        updateTodoApi(id, username, todo)
+        updateTodoApi(username, id, todo)
             .then(
                 (response)=>{
+                    console.log(response.data)
                     setDescription(response.data.description)
                     setTargetDate(response.data.targetDate)
+                    setDone(response.data.done)
                 }
             )
             .catch(
@@ -81,7 +85,7 @@ export default function TodoComponent(){
         <div className="container">
             <h1>Enter Todo Details</h1>
             <Formik
-                initialValues={{description,targetDate}}
+                initialValues={{description,targetDate,done}}
                 onSubmit={submitForm}
                 enableReinitialize={true}
                 validate={validate}
@@ -93,7 +97,7 @@ export default function TodoComponent(){
                         <Form>
                             <ErrorMessage
                                 name="description"
-                                component = "div"
+                                component="div"
                                 className="alert alert-warning"
                             >
                             </ErrorMessage>
@@ -112,6 +116,22 @@ export default function TodoComponent(){
                                 <label>Target Date</label>
                                 <Field className="form-control" type="date" name="targetDate"></Field>
                             </fieldset>
+
+                            <fieldset className="form-group">
+                                <label>
+                                    Done
+                                </label>
+                                <Field
+                                    type="checkbox"
+                                    name="done"
+                                    onChange={()=>{
+                                        props.setFieldValue('done', !props.values.done);
+                                    }}
+                                >
+
+                                </Field>
+                            </fieldset>
+
                             <div>
                                 <button className="btn btn-success m-4" type="submit">Submit</button>
                             </div>

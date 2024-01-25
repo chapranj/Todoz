@@ -25,7 +25,7 @@ export default function ListTodosComponent() {
         retrieveAllTodosForUsername(auth.username)
             .then(
                 (response) => {
-                    // console.log(response.data)
+                    console.log(response.data)
                     setTodos(response.data)
                 }
             )
@@ -55,6 +55,10 @@ export default function ListTodosComponent() {
         navigate(`/todo/${id}`)
     }
 
+    function handleAddNewTodo(){
+        navigate(`/addTodo`)
+    }
+
 
 
     return (
@@ -65,7 +69,7 @@ export default function ListTodosComponent() {
                 <table className="table">
                     <thead>
                         <tr>
-                            <th>ID</th>
+
                             <th>Description</th>
                             <th>Is Done</th>
                             <th>Target Date</th>
@@ -77,7 +81,7 @@ export default function ListTodosComponent() {
                         todos.map(
                             (todo) => (
                                 <tr key={todo.id}>
-                                    <td>{todo.id}</td>
+
                                     <td>{todo.description}</td>
                                     <td>{todo.done.toString()}</td>
                                     <td>{todo.targetDate}</td>
@@ -92,6 +96,7 @@ export default function ListTodosComponent() {
 
 
             </div>
+            <div className="btn btn-outline-primary" onClick={handleAddNewTodo} >Add new Todo</div>
         </div>
     )
 }

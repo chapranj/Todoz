@@ -10,4 +10,23 @@ const apiClient = axios.create(
 
 export const callAPI = () => { return apiClient.get('/hello-world-bean'); }
 
-export const callAPIWParam = (param) => {return apiClient.get(`/hello-world/path-variable/${param}`)}
+export const callAPIWParam = (param) => {
+    return apiClient.get(`/hello-world/path-variable/${param}`
+        ,
+        {
+            headers: {
+                Authorization: 'Basic cHJhbmphbDpwYXNz'
+            }
+        })
+}
+
+
+export const executeBasicAuth = (token) => {
+    return apiClient.get(`/basicauth`
+        ,
+        {
+            headers: {
+                Authorization: token
+            }
+        })
+}

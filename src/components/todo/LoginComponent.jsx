@@ -22,14 +22,12 @@ export default function LoginComponent() {
         setPassword(event.target.value);
     }
 
-    function handleSubmit() {
-        if (auth.login(username, password)) {
+    async function handleSubmit() {
+        if (await auth.login(username, password)) {
             setErrorMessage(false)
             navigate(`/welcome/${username}`)
         }
-
         else {
-            
             setErrorMessage(true);
         }
     }
